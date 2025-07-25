@@ -15,6 +15,7 @@ repositories {
 
 kotlin {
     js(IR) {
+        moduleName = "shashwath-resume"  // Added this for consistent JS output name
         browser {
             binaries.executable()
         }

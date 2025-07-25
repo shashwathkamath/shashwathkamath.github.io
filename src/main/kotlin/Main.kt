@@ -5,19 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import kotlinx.browser.document
-import org.jetbrains.compose.web.dom.A
-import org.jetbrains.compose.web.dom.B
-import org.jetbrains.compose.web.dom.Br
-import org.jetbrains.compose.web.dom.Button
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.H1
-import org.jetbrains.compose.web.dom.H2
-import org.jetbrains.compose.web.dom.H5
-import org.jetbrains.compose.web.dom.Li
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Section
-import org.jetbrains.compose.web.dom.Text
-import org.jetbrains.compose.web.dom.Ul
+import org.jetbrains.compose.web.attributes.*
+import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
 
 fun main() {
@@ -32,13 +21,56 @@ fun main() {
             }
         }
 
-        HeroSection(darkMode, { darkMode = !darkMode })
+        NavigationBar()
+        HeroSection(darkMode) { darkMode = !darkMode }
         SummarySection()
         ExperienceSection()
         SkillsSection()
         ProjectsSection()
         PatentsAwardsSection()
-        //ContactSection()
+       // ContactSection()
+        FooterSection()
+    }
+}
+
+@Composable
+fun NavigationBar() {
+    Nav({
+        classes("navbar", "navbar-expand-lg", "navbar-light", "bg-white", "sticky-top")
+    }) {
+        Div({ classes("container") }) {
+            A(href = "#", attrs = { classes("navbar-brand") }) { Text("Shashwath Kamath") }
+            Button({
+                classes("navbar-toggler")
+                attr("type", "button")
+                attr("data-bs-toggle", "collapse")
+                attr("data-bs-target", "#navbarNav")
+                attr("aria-controls", "navbarNav")
+                attr("aria-expanded", "false")
+                attr("aria-label", "Toggle navigation")
+            }) {
+                Span({ classes("navbar-toggler-icon") })
+            }
+            Div({
+                classes("collapse", "navbar-collapse")
+                id("navbarNav")
+            }) {
+                Ul({ classes("navbar-nav", "ms-auto") }) {
+                    listOf(
+                        "About" to "#summary",
+                        "Experience" to "#experience",
+                        "Skills" to "#skills",
+                        "Projects" to "#projects",
+                        "Patents & Awards" to "#patents",
+                        "Contact" to "#contact"
+                    ).forEach { (label, href) ->
+                        Li({ classes("nav-item") }) {
+                            A(href = href, attrs = { classes("nav-link") }) { Text(label) }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -47,7 +79,7 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
     Section({ classes("hero") }) {
         Div({ classes("container") }) {
             H1({ classes("display-4") }) { Text("Shashwath Kamath") }
-            P({ classes("lead") }) { Text("Senior Android Developer | Innovator | Mentor") }
+            P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
             A(href = "#contact", attrs = {
                 classes("btn", "btn-light", "btn-lg")
                 attr("aria-label", "Get in Touch")
@@ -62,6 +94,7 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
             Button(attrs = {
                 classes("btn", "btn-toggle")
                 onClick { toggleDarkMode() }
+                attr("aria-label", "Toggle Dark Mode")
             }) { Text(if (darkMode) "Switch to Light Mode" else "Switch to Dark Mode") }
         }
     }
@@ -73,7 +106,7 @@ fun SummarySection() {
         Div({ classes("container") }) {
             H2({ classes("text-center", "mb-4") }) { Text("Professional Summary") }
             P({ classes("text-center", "mx-auto"); style { property("max-width", "800px") } }) {
-                Text("Seasoned Senior Android Developer with over 12 years of hands-on experience in crafting efficient, reliable, and scalable mobile and web applications. Expert in Android Native development using Java and Kotlin, with a strong track record of optimizing app performance, boosting user satisfaction, and delivering innovative solutions that meet rigorous industry standards. Passionate about driving technological advancement through creative problem-solving and mentoring cross-functional teams to foster collaboration and growth. Additionally, proficient in React Native for the past 3 years, enabling seamless cross-platform development and enhanced project versatility.")
+                Text("Seasoned Senior Android and Full Stack Engineer with over 12 years of experience in designing and delivering efficient, scalable mobile and web applications. Proficient in Android Native development with Java and Kotlin, and adept in cross-platform solutions using React Native for 3 years. Skilled in full-stack technologies including TypeScript, Next.js, and Express.js, with a strong focus on performance optimization, user satisfaction, and mentoring teams to drive innovation and maintain industry standards.")
             }
         }
     }
@@ -131,20 +164,29 @@ fun ExperienceSection() {
         )
     )
     var expandedIndex by remember { mutableStateOf(0) }
+
     Section({ id("experience"); classes("section") }) {
         Div({ classes("container") }) {
             H2({ classes("text-center", "mb-4") }) { Text("Employment History") }
             Div({ classes("accordion") }) {
                 jobs.forEachIndexed { index, job ->
+                    val collapseId = "expCollapse$index" // Use unique ID
                     Div({ classes("accordion-item") }) {
                         H2({ classes("accordion-header") }) {
                             Button({
-                                classes("accordion-button", if (index != expandedIndex) "collapsed" else "")
+                                classes("accordion-button", if (expandedIndex != index) "collapsed" else "")
                                 attr("type", "button")
+                                attr("data-bs-toggle", "collapse")
+                                attr("data-bs-target", "#$collapseId")
+                                attr("aria-expanded", if (expandedIndex == index) "true" else "false")
+                                attr("aria-controls", collapseId)
                                 onClick { expandedIndex = if (expandedIndex == index) -1 else index }
                             }) { Text(job["title"] as String) }
                         }
-                        Div({ classes("accordion-collapse", if (index == expandedIndex) "show" else "") }) {
+                        Div({
+                            id(collapseId)
+                            classes("accordion-collapse", "collapse", if (expandedIndex == index) "show" else "")
+                        }) {
                             Div({ classes("accordion-body") }) {
                                 Ul({ classes("experience-details") }) {
                                     (job["details"] as List<String>).forEach { li -> Li { Text(li) } }
@@ -248,6 +290,66 @@ fun PatentsAwardsSection() {
                     Text("Awarded by Shobiz for creating an innovative QR scanner module in a mobile app for SAP Singapore.")
                 }
             }
+        }
+    }
+}
+
+//@Composable
+//fun ContactSection() {
+//    Section({ id("contact"); classes("section") }) {
+//        Div({ classes("container") }) {
+//            H2({ classes("text-center", "mb-4") }) { Text("Get in Touch") }
+//            Form(attrs = {
+//                classes("contact-form")
+//                attr("action", "https://formspree.io/f/your-form-id") // Replace with your Formspree ID
+//                attr("method", "POST")
+//            }) {
+//                Div({ classes("mb-3") }) {
+//                    Label({ attr("for", "name") ; classes("form-label") }) { Text("Name") }
+//                    Input(type = InputType.Text) {
+//                        classes("form-control")
+//                        id("name")
+//                        attr("name", "name")
+//                        required(true)
+//                    }
+//                }
+//                Div({ classes("mb-3") }) {
+//                    Label({ attr("for", "email") ; classes("form-label") }) { Text("Email") }
+//                    Input(type = InputType.Email) {
+//                        classes("form-control")
+//                        id("email")
+//                        attr("name", "email")
+//                        required(true)
+//                    }
+//                }
+//                Div({ classes("mb-3") }) {
+//                    Label({ attr("for", "message") ; classes("form-label") }) { Text("Message") }
+//                    TextArea({
+//                        classes("form-control")
+//                        id("message")
+//                        attr("name", "message")
+//                        rows(5)
+//                        required(true)
+//                    })
+//                }
+//                Button({
+//                    classes("btn", "btn-primary")
+//                    attr("type", "submit")
+//                }) { Text("Send Message") }
+//            }
+//        }
+//    }
+//}
+
+@Composable
+fun FooterSection() {
+    Footer {
+        P { Text("© 2025 Shashwath Kamath. All rights reserved.") }
+        A(href = "https://www.linkedin.com/in/kamathshashwath", attrs = { classes("social-icon") }) {
+            I({ classes("fab", "fa-linkedin") })
+        }
+        A(href = "https://github.com/shashwathkamath", attrs = { classes("social-icon") }) {
+            I({ classes("fab", "fa-github") })
         }
     }
 }
