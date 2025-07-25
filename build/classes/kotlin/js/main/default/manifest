@@ -1,0 +1,10 @@
+abi_version=1.8.0
+builtins_platform=JS
+compiler_version=2.0.0
+depends=org.jetbrains.compose.html\:html-core org.jetbrains.compose.runtime\:runtime org.jetbrains.compose.html\:internal-html-core-runtime org.jetbrains.kotlin\:kotlin-dom-api-compat kotlin
+ir_signature_versions=1,2
+jsOutputName=shashwathkamath.github.io
+metadata_version=1.4.1
+serializedIrFileFingerprints=zm65bppndp1k.3e4rt062nsqfm
+serializedKlibFingerprint=1xt98qnmsnx9s.30czfq21xdsht
+unique_name=me.shashwathkamath\:shashwathkamath.github.io
