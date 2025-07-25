@@ -1,0 +1,40 @@
+{
+  "version": "9",
+  "items": {
+    "6c763c61992e82317a26f034c01352f5": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/2.0.0/67cd61983cdd9c8540c22958c8cbe52b58048d50/kotlin-stdlib-js-2.0.0.klib"
+    },
+    "3842d86367b245b9d6e22b89cfc4dada": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-dom-api-compat/2.0.0/bf998bede3d1e04ebe4303794efbbac59787a848/kotlin-dom-api-compat-2.0.0.klib"
+    },
+    "6fa62b73ffa0904eba15ea87c9a7346e": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.html/html-core-js/1.6.11/4617b7cb1fafb28566755c408d19173c4fc27a13/html-core-js-1.6.11.klib",
+      "target": "html-core-js/1.6.11"
+    },
+    "5cfe4cfbcd6f15f29faebd70d2133e7a": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.html/internal-html-core-runtime-js/1.6.11/eb60e3896fd1c291da31f50c44136065d0260c24/internal-html-core-runtime-js-1.6.11.klib"
+    },
+    "e32b1f7ea3e5d3f82a02e98a14fae2d7": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.runtime/runtime-js/1.6.11/1484380a34adb77f0d6b76fc732ef9f74733c8cd/runtime-js-1.6.11.klib"
+    },
+    "5f460de879b1311463aa4ad821c02375": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-js/1.8.0/15c3b0e757e1e31196d82616f47e66df3ecd7d5b/kotlinx-coroutines-core-js-1.8.0.klib"
+    },
+    "ba8177ecda3981427862b37308d71b44": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-js/0.23.2/e19f377f0dc24137414f5f3e1be730f60aeb9539/atomicfu-js-0.23.2.klib"
+    },
+    "e9306c2451bbe8784372b11cb78554d0": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlinx-atomicfu-runtime/1.9.23/373f8846d435f6e7f77453cefbb97c548ae4781e/kotlinx-atomicfu-runtime-1.9.23.klib"
+    },
+    "7863099849b1ae49e070fccd37807533": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.collection-internal/collection-js/1.6.11/e28bbce3d18fee707bf4579719dd2d98e4a59291/collection-js-1.6.11.klib"
+    },
+    "13e66c9c0bf4abb0871b96eeb1dec610": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.annotation-internal/annotation-js/1.6.11/6929ebfef24ab0afa0bfa7509b33527d10b2782c/annotation-js-1.6.11.klib"
+    },
+    "b4d60d3d5792ff3e790387848e667a0d": {
+      "src": "/Users/kamathshashwath/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js-runner/2.0.0/ade1b233b953dd2b2d2e0daf82af735a4a46d700/kotlin-test-js-runner-2.0.0.jar",
+      "target": "kotlin-test-js-runner/0.0.1"
+    }
+  }
+}

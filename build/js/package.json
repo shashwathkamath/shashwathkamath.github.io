@@ -1,0 +1,17 @@
+{
+  "name": "shashwathkamath.github.io",
+  "version": "1.0-SNAPSHOT",
+  "private": true,
+  "workspaces": [
+    "packages/shashwathkamath.github.io",
+    "packages/shashwathkamath.github.io-test",
+    "packages_imported/html-core-js/1.6.11",
+    "packages_imported/kotlin-test-js-runner/0.0.1"
+  ],
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [],
+  "resolutions": {}
+}
