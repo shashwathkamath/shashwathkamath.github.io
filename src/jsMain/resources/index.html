@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"> <!-- Enhanced viewport for better zoom/touch -->
-    <title>Shashwath Kamath</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shashwath Kamath - Senior Android & Full Stack Engineer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Arial', sans-serif; background-color: #f8f9fa; color: #333; transition: background-color 0.3s; }
         body.dark { background-color: #121212; color: #ffffff; }
         .hero { background: linear-gradient(135deg, #007bff, #6610f2); color: white; padding: 100px 0; text-align: center; }
-        .sidebar { background-color: #f0f0f0; padding: 20px; height: auto; position: static; } /* Changed to static for mobile stacking */
+        .sidebar { background-color: #f0f0f0; padding: 20px; height: 100vh; position: sticky; top: 0; }
         body.dark .sidebar { background-color: #1e1e1e; }
         .main-content { padding: 20px; }
         .section { margin-bottom: 40px; }
@@ -24,6 +24,7 @@
         .contact-icon:hover { color: #0056b3; }
         footer { background: #343a40; color: white; padding: 20px 0; text-align: center; }
         body.dark footer { background: #1e1e1e; }
+        .btn-toggle { margin-top: 15px; } /* Added gap for dark mode button */
         @media (max-width: 768px) {
             .hero { padding: 80px 20px; }
             .section { padding: 40px 15px; }
@@ -31,14 +32,8 @@
             .skill-card { padding: 8px 15px; font-size: 0.9em; }
             .project-card { padding: 15px; }
             .contact-icon { font-size: 30px; margin: 0 15px; }
-            .row { flex-direction: column; } /* Stack sidebar and main content on mobile */
-            .sidebar { height: auto; position: static; padding: 15px; }
-            .main-content { padding: 15px; }
-        }
-        @media (max-width: 576px) {
-            .hero { padding: 60px 15px; }
-            .h2, .display-4 { font-size: 1.5em; } /* Reduce heading sizes on very small screens */
-            .btn-lg { font-size: 1em; padding: 10px 15px; } /* Smaller buttons for touch */
+            .btn-toggle { margin-top: 20px; } /* Increased gap for mobile */
+            .hero .btn { margin-bottom: 10px; } /* Add gap between buttons on mobile */
         }
     </style>
 </head>
