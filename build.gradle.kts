@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "2.0.0"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
-    id("org.jetbrains.compose") version "1.6.11"
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
 }
 
 group = "me.shashwathkamath"
@@ -15,14 +15,12 @@ repositories {
 
 kotlin {
     js(IR) {
-        moduleName = "shashwath-resume"  // Added this for consistent JS output name
         browser {
             binaries.executable()
         }
     }
     sourceSets {
         val jsMain by getting {
-            kotlin.srcDir("src/main/kotlin") // Point to main instead of jsMain
             dependencies {
                 implementation(compose.html.core)
                 implementation(compose.runtime)
