@@ -38,7 +38,7 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
             H1({ classes("display-4") }) { Text("Shashwath Kamath") }
             P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
             A(href = "#contact", attrs = { classes("btn", "btn-light", "btn-lg") }) { Text("Get in Touch") }
-            A(href = "Shashwath-Kamath-Resume.pdf", attrs = {
+            A(href = "Shashwath-Kamath-Senior-Engineer.pdf", attrs = {
                 classes("btn", "btn-light", "btn-lg", "ms-2")
                 attr("download", "")
             }) { Text("Download Resume") }
