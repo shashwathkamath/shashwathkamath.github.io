@@ -9,6 +9,7 @@ echo "🚀 Starting deployment..."
 
 # 1. Build the production-ready files.
 echo "🏗️ Building for production..."
+./gradlew clean
 ./gradlew jsBrowserDistribution
 
 # 2. Copy the contents of the build output to the root directory.
