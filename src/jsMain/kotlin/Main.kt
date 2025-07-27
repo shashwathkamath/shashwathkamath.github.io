@@ -49,20 +49,6 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
     Section({ classes("hero", "text-center", "text-md-start") }) {
         Div({ classes("container") }) {
             Div({ classes("row", "align-items-center") }) {
-                // Column for the profile picture
-                Div({ classes("col-md-4", "mb-4", "mb-md-0") }) {
-                    Img(
-                        src = "images/profile-picture.jpg", // Assumes image is in src/jsMain/resources/images/
-                        alt = "Shashwath Kamath Profile Picture",
-                        attrs = {
-                            classes("img-fluid", "rounded-circle", "mx-auto", "d-block")
-                            style {
-                                property("max-width", "250px")
-                                property("border", "5px solid white")
-                            }
-                        }
-                    )
-                }
                 // Column for the text content
                 Div({ classes("col-md-8") }) {
                     H1({ classes("display-4") }) { Text("Shashwath Kamath") }
