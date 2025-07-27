@@ -2,6 +2,19 @@ import androidx.compose.runtime.*
 import kotlinx.browser.document
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
+import kotlin.js.Date
+
+data class Job(
+    val title: String,
+    val details: List<String>,
+    val techStack: String
+)
+
+data class Project(
+    val title: String,
+    val description: String,
+    val links: List<Pair<String, String>>
+)
 
 fun main() {
     renderComposable(rootElementId = "root") {
@@ -33,19 +46,38 @@ fun ResumeLayout(darkMode: Boolean, toggleDarkMode: () -> Unit) {
 
 @Composable
 fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
-    Section({ classes("hero") }) {
+    Section({ classes("hero", "text-center", "text-md-start") }) {
         Div({ classes("container") }) {
-            H1({ classes("display-4") }) { Text("Shashwath Kamath") }
-            P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
-            A(href = "#contact", attrs = { classes("btn", "btn-light", "btn-lg") }) { Text("Get in Touch") }
-            A(href = "Shashwath-Kamath-Senior-Engineer.pdf", attrs = {
-                classes("btn", "btn-light", "btn-lg", "ms-2")
-                attr("download", "")
-            }) { Text("Download Resume") }
-            Button(attrs = {
-                classes("btn", "btn-light", "btn-lg", "ms-2")
-                onClick { toggleDarkMode() }
-            }) { Text(if (darkMode) "Light Mode" else "Dark Mode") }
+            Div({ classes("row", "align-items-center") }) {
+                // Column for the profile picture
+                Div({ classes("col-md-4", "mb-4", "mb-md-0") }) {
+                    Img(
+                        src = "images/profile-picture.jpg", // <-- UPDATE THIS to your image path
+                        alt = "Shashwath Kamath Profile Picture",
+                        attrs = {
+                            classes("img-fluid", "rounded-circle", "mx-auto", "d-block")
+                            style {
+                                property("max-width", "250px")
+                                property("border", "5px solid white")
+                            }
+                        }
+                    )
+                }
+                // Column for the text content
+                Div({ classes("col-md-8") }) {
+                    H1({ classes("display-4") }) { Text("Shashwath Kamath") }
+                    P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
+                    A(href = "#contact", attrs = { classes("btn", "btn-light", "btn-lg", "m-1") }) { Text("Get in Touch") }
+                    A(href = "Shashwath-Kamath-Senior-Engineer.pdf", attrs = {
+                        classes("btn", "btn-light", "btn-lg", "m-1")
+                        attr("download", "")
+                    }) { Text("Download Resume") }
+                    Button(attrs = {
+                        classes("btn", "btn-light", "btn-lg", "m-1")
+                        onClick { toggleDarkMode() }
+                    }) { Text(if (darkMode) "Light Mode" else "Dark Mode") }
+                }
+            }
         }
     }
 }
@@ -98,67 +130,66 @@ fun ExperienceSection() {
     Section({ id("experience"); classes("section") }) {
         H2 { Text("Experience") }
         val jobs = listOf(
-            mapOf(
-                "title" to "Senior Android and Full Stack Engineer - Infovision, Verizon (Oct 2023 - Present, Basking Ridge, NJ)",
-                "details" to listOf(
+            Job(
+                title = "Senior Android and Full Stack Engineer - Infovision, Verizon (Oct 2023 - Present, Basking Ridge, NJ)",
+                details = listOf(
                     "Architect My Verizon Services managing 25M+ devices, enhancing app efficiency and reliability.",
                     "Build Extension Profile Module for dynamic app module management, optimizing service downloads.",
-                    "Create Carrier Config feature, enabling server-side carrier settings for improved user experience",
+                    "Create Carrier Config feature, enabling server-side carrier settings for improved user experience.",
                     "Developed a Unified Settings App for OEMs, ensuring compliance with Verizon standards and streamlining the device finalization process.",
-                    "Orchestrated cross-functional teams to create an Automation Portal, achieving a 40% reduction in QA workload through optimized testing",
-                    "Android Tech Stack: Kotlin, Clean Architecture pattern, Java, MVI, Jetpack Compose",
-                    "Full Stack: Typescript, Next Js Framwork, Express"
+                    "Orchestrated cross-functional teams to create an Automation Portal, achieving a 40% reduction in QA workload through optimized testing."
                 ),
-                "techStack" to "Kotlin, Java, Jetpack Compose, TypeScript, Next.js",
-                "fullStack" to "Typescript, Next Js Framework, Express"
+                techStack = "Kotlin, Clean Architecture, Java, MVI, Jetpack Compose, TypeScript, Next.js, Express"
             ),
-            mapOf(
-                "title" to "Senior Mobile and Backend Engineer - Johnson Controls Inc. (Aug 2021 - Aug 2023, Edison, NJ)",
-                "details" to listOf(
+            Job(
+                title = "Senior Mobile and Backend Engineer - Johnson Controls Inc. (Aug 2021 - Aug 2023, Edison, NJ)",
+                details = listOf(
                     "Led integration of OAuth for user authentication.",
                     "Developed advanced video streaming features using WebRTC, resulting in improved Time to First Frame and user engagement.",
-                    "Architected a Rules Engine with Apache Kafka, optimizing performance for 1 million event messages, driving substantial efficiency gains",
-                    "Mentored junior engineers on best coding practices, fostering a culture of continuous learning and improving code quality across the team.",
-                    "Resolved complex issues in the Android Native Java and Typescript codebase, ensuring smooth deployment of the CloudVue app on the Google Play Store.",
-                    "Optimized codebase performance, leading to faster load times and a noticeable increase in user satisfaction across applications.",
+                    "Architected a Rules Engine with Apache Kafka, optimizing performance for 1 million event messages.",
+                    "Mentored junior engineers on best coding practices, fostering a culture of continuous learning and improving code quality.",
+                    "Resolved complex issues in the Android Native Java and Typescript codebase, ensuring smooth deployment of the CloudVue app.",
+                    "Optimized codebase performance, leading to faster load times and a noticeable increase in user satisfaction."
                 ),
-                "techStack" to "React Native, TypeScript, Apache Kafka",
-                "fullStack" to "Typescript, Next Js Framework, Express"
+                techStack = "React Native, TypeScript, React.js, Jetpack Compose, Next.js, Express, Apache Kafka"
             ),
-            mapOf(
-                "title" to "Android Framework Engineer - L&T Technology Services (Oct 2017 - Aug 2021, Berkeley Heights, NJ)",
-                "details" to listOf(
-                    "Enhanced user experience by developing intuitive SetupWizard screens for carrier-specific Samsung devices, leading to increased user satisfaction",
+            Job(
+                title = "Android Framework Engineer - L&T Technology Services (Oct 2017 - Aug 2021, Berkeley Heights, NJ)",
+                details = listOf(
+                    "Enhanced user experience by developing intuitive SetupWizard screens for carrier-specific Samsung devices.",
                     "Analyzed carrier requirements to maintain and implement critical system app features ensuring compliance and operational efficiency.",
                     "Created automation scripts using Python for app testing, significantly reducing manual testing time and improving deployment speed.",
-                    "Partnered with cross-functional teams to gather feedback, driving continuous improvements in carrier applications and enhancing overall performance.",
-                    "Demonstrated strong problem-solving skills by addressing technical challenges in app development, fostering a collaborative team environment.",
-                    "Enhanced app performance by aligning system app features with carrier needs, resulting in improved user satisfaction and engagement",
+                    "Partnered with cross-functional teams to gather feedback, driving continuous improvements in carrier applications.",
+                    "Demonstrated strong problem-solving skills by addressing technical challenges in app development.",
+                    "Enhanced app performance by aligning system app features with carrier needs, resulting in improved user satisfaction."
                 ),
-                "techStack" to "Kotlin, MVVM, Java, XML"
+                techStack = "Kotlin, MVVM, Java, XML, Python"
             ),
-            mapOf(
-                "title" to "Senior Mobile Developer - Shobiz Experiential Communications Pvt Ltd. (Mar 2013 - Dec 2014, Mumbai, India)",
-                "details" to listOf(
-                    "Led mobile app development, enhancing user engagement and data collection efficiency",
+            Job(
+                title = "Senior Mobile Developer - Shobiz Experiential Communications Pvt Ltd. (Mar 2013 - Dec 2014, Mumbai, India)",
+                details = listOf(
+                    "Led mobile app development, enhancing user engagement and data collection efficiency.",
                     "Resolved app issues, ensuring seamless updates and improved functionality.",
-                    "Utilized Android and iOS tech stack, advancing project delivery timelines",
-                    "Spearheaded the development of mobile applications, enhancing user engagement and contributing to a 30increase in client project success.",
-                    "Designed interactive wireframes that improved client presentation outcomes, leading to a notable uptick in project approvals.",
-                    "Fostered teamwork across departments to build kiosk applications, streamlining user data collection and enhancing service responsiveness.",
+                    "Utilized Android and iOS tech stack, advancing project delivery timelines.",
+                    "Spearheaded mobile application development, contributing to a 30% increase in client project success.",
+                    "Designed interactive wireframes that improved client presentation outcomes.",
+                    "Fostered teamwork across departments to build kiosk applications, streamlining user data collection."
                 ),
-                "techStack" to "MVP pattern, Java, XML"
+                techStack = "Android, iOS, MVP pattern, Java, XML"
             )
         )
         jobs.forEach { job ->
-            Div({ classes("experience-card") }) {
-                H4 { Text(job["title"] as String) }
+            Div({ classes("experience-card", "mb-4") }) {
+                H4 { Text(job.title) }
                 Ul {
-                    (job["details"] as List<String>).forEach { detail ->
+                    job.details.forEach { detail ->
                         Li { Text(detail) }
                     }
                 }
-                P { Text("Tech Stack: ${job["techStack"] as String}") }
+                P {
+                    B { Text("Tech Stack: ") }
+                    Text(job.techStack)
+                }
             }
         }
     }
@@ -182,18 +213,22 @@ fun ProjectsSection() {
     Section({ id("projects"); classes("section") }) {
         H2 { Text("Projects") }
         val projects = listOf(
-            mapOf(
-                "title" to "BookDigest (BookApp) - In Progress",
-                "description" to "A mobile app for exchanging books (free or paid).",
-                "links" to listOf("Frontend" to "https://github.com/shashwathkamath/BookApp", "Backend" to "https://github.com/shashwathkamath/BookApp-Backend")
+            Project(
+                title = "BookDigest (BookApp) - In Progress",
+                description = "A mobile app for exchanging books (free or paid).",
+                links = listOf("Frontend" to "https://github.com/shashwathkamath/BookApp", "Backend" to "https://github.com/shashwathkamath/BookApp-Backend")
             )
         )
         projects.forEach { project ->
             Div({ classes("project-card") }) {
-                H5 { Text(project["title"] as String) }
-                P { Text(project["description"] as String) }
-                (project["links"] as List<Pair<String, String>>).forEach { (label, url) ->
-                    A(href = url, attrs = { classes("btn", "btn-primary", "me-2"); attr("target", "_blank") }) { Text(label) }
+                H5 { Text(project.title) }
+                P { Text(project.description) }
+                project.links.forEach { (label, url) ->
+                    A(href = url, attrs = {
+                        classes("btn", "btn-primary", "me-2")
+                        attr("target", "_blank")
+                        attr("rel", "noopener noreferrer") // Good practice for security
+                    }) { Text(label) }
                 }
             }
         }
@@ -239,6 +274,7 @@ fun ContactSection() {
 @Composable
 fun FooterSection() {
     Footer {
-        P { Text("© 2025 Shashwath Kamath. All rights reserved.") }
+        val currentYear = Date().getFullYear()
+        P { Text("© $currentYear Shashwath Kamath. All rights reserved.") }
     }
 }
