@@ -1,20 +1,15 @@
 import androidx.compose.runtime.*
 import kotlinx.browser.document
+import kotlinx.coroutines.launch
+import me.shashwathkamath.AnalysisResult
+import me.shashwathkamath.GeminiAi
+import org.jetbrains.compose.web.attributes.placeholder
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
 import kotlin.js.Date
 
-data class Job(
-    val title: String,
-    val details: List<String>,
-    val techStack: String
-)
-
-data class Project(
-    val title: String,
-    val description: String,
-    val links: List<Pair<String, String>>
-)
 
 fun main() {
     renderComposable(rootElementId = "root") {
@@ -91,6 +86,7 @@ fun MainContent() {
         ProjectsSection()
         PatentsAwardsSection()
         SkillsSection()
+        ProfileMatchSection()
         ContactSection()
     }
 }
@@ -137,6 +133,146 @@ fun SkillsSection() {
             val skills = PortfolioData.skills
             skills.forEach { skill ->
                 Div({ classes("skill-card") }) { Text(skill) }
+            }
+        }
+    }
+}
+
+
+/**
+ * A new section allowing recruiters to analyze a job description against the profile.
+ * This implementation uses a client-side keyword matching for demonstration purposes.
+ * A production version should replace the scoring logic with a call to a backend API for NLP.
+ */
+@Composable
+fun ProfileMatchSection() {
+    // State for the text area input
+    var jobDescriptionText by remember { mutableStateOf("") }
+
+    // A single state to hold the entire analysis result from the AI
+    var analysisResult by remember { mutableStateOf<AnalysisResult?>(null) }
+
+    // State for loading and error messages
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    // Coroutine scope to launch the suspend function for the API call
+    val coroutineScope = rememberCoroutineScope()
+    val profileText = remember {
+        val skills = PortfolioData.skills.joinToString(", ")
+        val experience = PortfolioData.jobs.joinToString("\n\n") { job ->
+            "${job.title}\n${job.details.joinToString("\n- ")}\nTech Stack: ${job.techStack}"
+        }
+        """
+        Professional Summary:
+        Seasoned Senior Android and Full Stack Engineer with over 12 years of experience in designing and delivering efficient, scalable mobile and web applications. Proficient in Android Native development with Java and Kotlin, and adept in cross-platform solutions using React Native for 3 years. Skilled in full-stack technologies including TypeScript, Next.js, and Express.js, with a strong focus on performance optimization, user satisfaction, and mentoring teams to drive innovation and maintain industry standards.
+
+        Skills: $skills
+
+        Experience:
+        $experience
+        """.trimIndent()
+    }
+
+    // This function is now more robust with try-catch-finally
+    fun performAnalysis() {
+        // Reset state before starting
+        isLoading = true
+        analysisResult = null
+        errorMessage = null
+
+        coroutineScope.launch {
+            try {
+                val result = GeminiAi.analyze(
+                    profile = profileText,
+                    jobDescription = jobDescriptionText
+                )
+                if (result != null) {
+                    analysisResult = result
+                } else {
+                    // This case is hit if analyze() returns null from its own internal error handling
+                    errorMessage = "Sorry, the analysis could not be completed. The AI returned an invalid response."
+                }
+            } catch (e: Exception) {
+                // This will catch any other unexpected errors, like the 404 you saw.
+                console.error("An unexpected error occurred during analysis:", e)
+                errorMessage = "An unexpected error occurred. Please check the browser console (F12) for more details."
+            } finally {
+                // This 'finally' block ensures the loading spinner is always turned off,
+                // even if an error occurs. This prevents the UI from "hanging".
+                isLoading = false
+            }
+        }
+    }
+
+    Section({ id("profile-matcher"); classes("section") }) {
+        H2 { Text("AI-Powered Profile Matcher") }
+        P { Text("Paste a job description below to get an AI-generated analysis of how well it matches my profile.") }
+        Div({ classes("mb-3") }) {
+            TextArea(jobDescriptionText) {
+                classes("form-control")
+                style { property("height", "150px") }
+                placeholder("Paste job description here...")
+                onInput { event ->
+                    jobDescriptionText = event.value
+                    // Reset results if text changes
+                    analysisResult = null
+                    errorMessage = null
+                }
+            }
+        }
+        Button(attrs = {
+            classes("btn", "btn-primary")
+            onClick {
+                if (jobDescriptionText.isNotBlank()) {
+                    performAnalysis()
+                }
+            }
+            // Disable button if there's no text or if it's loading
+            if (jobDescriptionText.isBlank() || isLoading) {
+                attr("disabled", "true")
+            }
+        }) {
+            Text(if (isLoading) "Analyzing..." else "Analyze with AI")
+        }
+        if (isLoading) {
+            Div({ classes("mt-3", "spinner-border", "text-primary") }) {
+                Span({ classes("visually-hidden") }) { Text("Loading...") }
+            }
+        }
+        errorMessage?.let { error ->
+            Div({ classes("alert", "alert-danger", "mt-4") }) {
+                Text(error)
+            }
+        }
+        analysisResult?.let { result ->
+            Div({ classes("mt-4", "p-3", "border", "rounded") }) {
+                H4 { Text("AI Analysis Result") }
+                P { B { Text("Overall Match Score: ${result.matchScore}%") } }
+                Div({ classes("progress") }) {
+                    Div({
+                        classes("progress-bar")
+                        style { width(result.matchScore.percent) }
+                        attr("role", "progressbar")
+                        attr("aria-valuenow", result.matchScore.toString())
+                        attr("aria-valuemin", "0")
+                        attr("aria-valuemax", "100")
+                    })
+                }
+                H5({ classes("mt-4") }) { Text("Summary") }
+                P { Text(result.summary) }
+                H5({ classes("mt-3") }) { Text("Strengths") }
+                Ul({ classes("list-group") }) {
+                    result.strengths.forEach { strength ->
+                        Li({ classes("list-group-item") }) { Text(strength) }
+                    }
+                }
+                H5({ classes("mt-3") }) { Text("Gaps / Areas for Growth") }
+                Ul({ classes("list-group") }) {
+                    result.gaps.forEach { gap ->
+                        Li({ classes("list-group-item") }) { Text(gap) }
+                    }
+                }
             }
         }
     }
