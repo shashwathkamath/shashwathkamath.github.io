@@ -1,25 +1,22 @@
-# Shashwath Kamath Portfolio (Kotlin Compose for Web)
+# AI-Powered Interactive Resume & Portfolio
 
-This is a personal portfolio web app built with [Kotlin Compose for Web](https://github.com/JetBrains/compose-multiplatform).
+This project is a modern, fully-interactive personal portfolio website designed to showcase my skills as a Senior Software Engineer. It is built from the ground up using a cutting-edge technology stack, including **Kotlin/JS** for the logic and **Jetpack Compose for Web** for the declarative UI.
 
-## Prerequisites
-- [JDK 17+](https://adoptopenjdk.net/)
-- [Gradle](https://gradle.org/) (or use the Gradle wrapper)
+Moving beyond a traditional static resume, this application includes a unique **"AI Profile Matcher"** feature. This tool leverages the Google Gemini API to provide an instant, in-depth analysis of how my profile aligns with a given job description, offering a match score, a summary, and a breakdown of strengths and potential gaps.
 
-## Run Locally
-```sh
-./gradlew jsBrowserRun
-```
+The live version is deployed on GitHub Pages: **[https://shashwathkamath.github.io](https://shashwathkamath.github.io)**
 
-## Build for Production
-```sh
-./gradlew jsBrowserProductionWebpack
-```
-The output will be in `build/distributions/`.
+## ✨ Key Features
 
-## Project Structure
-- `src/main/kotlin/Main.kt` — Main Compose for Web entry point
-- `src/main/resources/index.html` — HTML loader
+-   **AI-Powered Resume Analysis**: Paste any job description to receive an instant, AI-generated analysis of my qualifications for the role, powered by the Google Gemini API in JSON mode for reliable results.
+-   **Declarative UI with Compose for Web**: The entire frontend is built using Jetpack Compose for Web, demonstrating modern UI development patterns in a Kotlin-first environment.
+-   **Automated Deployment**: The site is automatically built and deployed to GitHub Pages using a custom GitHub Actions workflow, ensuring seamless integration and continuous delivery.
+-   **Responsive Design**: A clean, responsive layout that provides a great user experience on both desktop and mobile devices.
 
-## Customization
-Edit `Main.kt` to update your portfolio content and UI. 
+## 🛠️ Tech Stack
+
+-   **Frontend**: Kotlin/JS, Jetpack Compose for Web, HTML5, CSS3
+-   **AI & APIs**: Google Gemini API
+-   **Build & Tooling**: Gradle
+-   **CI/CD**: GitHub Actions
+-   **Hosting**: GitHub Pages
