@@ -1,4 +1,11 @@
 object PortfolioData {
+    val summary = "Seasoned Senior Android and Full Stack Engineer with over 12 years of experience in designing and delivering efficient, scalable mobile and web applications. Proficient in Android Native development with Java and Kotlin, and adept in cross-platform solutions using React Native for 3 years. Skilled in full-stack technologies including TypeScript, Next.js, and Express.js, with a strong focus on performance optimization, user satisfaction, and mentoring teams to drive innovation and maintain industry standards."
+    val email = "kamathsh91@gmail.com"
+    val resumeUrl = "Shashwath-Kamath-Senior-Engineer.pdf"
+    val socialLinks = listOf(
+        "https://www.linkedin.com/in/shashwath-kamath/" to "fa-linkedin",
+        "https://github.com/shashwathkamath" to "fa-github"
+    )
 
     val jobs = listOf(
         Job(
