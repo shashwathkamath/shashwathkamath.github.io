@@ -6,7 +6,8 @@ on:
   # No longer building on pull_request to avoid deploying un-merged code
   # pull_request:
   #   branches: [ main ]
-
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
