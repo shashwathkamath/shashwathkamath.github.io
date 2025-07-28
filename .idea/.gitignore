@@ -1,3 +1,11 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+# /.gitignore
+
+# Secret files
+local.properties
+
+# Gradle build directory
+/build/

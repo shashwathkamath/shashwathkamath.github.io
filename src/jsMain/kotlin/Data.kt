@@ -74,3 +74,15 @@ object PortfolioData {
         "Contact" to "#contact"
     )
 }
+
+data class Job(
+    val title: String,
+    val details: List<String>,
+    val techStack: String
+)
+
+data class Project(
+    val title: String,
+    val description: String,
+    val links: List<Pair<String, String>>
+)
