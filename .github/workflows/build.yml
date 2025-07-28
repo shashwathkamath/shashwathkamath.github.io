@@ -1,13 +1,14 @@
-name: Build Project
+name: Build and Deploy Project
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # No longer building on pull_request to avoid deploying un-merged code
+  # pull_request:
+  #   branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,7 +24,24 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Build with Gradle
-        # The environment variable is automatically picked up by our build.gradle.kts script
         run: ./gradlew build
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Commit and Push Compiled JS
+        # This step only runs on pushes to the main branch, not on pull requests.
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          # Configure Git with the bot's identity
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Force-add the compiled JavaScript file (update path if necessary)
+          git add -f build/dist/js/productionExecutable/shashwathkamath.github.io.js
+          
+          # Commit the file if there are any changes
+          # The '|| exit 0' part prevents the workflow from failing if there's nothing to commit
+          git commit -m "CI: Build and deploy latest JS" || exit 0
+          
+          # Push the changes back to the main branch
+          git push
