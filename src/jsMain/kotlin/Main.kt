@@ -309,7 +309,7 @@ fun SkillsSection() {
 fun ContactSection() {
     Section({ id("contact"); classes("section") }) {
         H2 { Text("Get in Touch") }
-        P { Text("I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious team. Feel free to reach out.") }
+        P { Text("I'm always open to discussing new projects, creative ideas. Feel free to reach out.") }
         P {
             B { Text("Email: ") }
             A(href = "mailto:${PortfolioData.email}") { Text(PortfolioData.email) }
