@@ -1,12 +1,14 @@
 package me.shashwathkamath
-import me.shashwathkamath.ApiKey
 import kotlinx.coroutines.await
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import me.shashwathkamath.config.BuildConfig
 import kotlin.js.Promise
 import kotlin.js.json
 
+@JsModule("@google/generative-ai")
+@JsNonModule
 external class GoogleGenerativeAI(apiKey: String) {
     fun getGenerativeModel(options: dynamic): GenerativeModel
 }
@@ -25,20 +27,28 @@ data class AnalysisResult(
 )
 
 object GeminiAi {
-    private const val API_KEY = ApiKey.GEMINI_API_KEY
-
-    private val genAI by lazy {
-        val gga = js("window.GoogleGenerativeAI")
-        if (js("typeof gga === 'undefined'")) {
-            console.error("GoogleGenerativeAI SDK not loaded. Please check index.html.")
-            null
-        } else {
+    private val API_KEY = BuildConfig.GEMINI_API_KEY
+    private val genAI: GoogleGenerativeAI? = if (API_KEY.isNotBlank()) {
+        try {
             GoogleGenerativeAI(API_KEY)
+        } catch (e: Exception) {
+            console.error("Failed to initialize GoogleGenerativeAI.", e)
+            null
         }
+    } else {
+        console.error("Gemini API Key is missing. Please check your configuration.")
+        null
     }
 
     suspend fun analyze(profile: String, jobDescription: String): AnalysisResult? {
-        val model = genAI?.getGenerativeModel(json("model" to "gemini-2.0-flash")) ?: return null
+        if (genAI == null) {
+            console.error("Gemini AI client is not available.")
+            return null
+        }
+        val model = genAI?.getGenerativeModel(json("model" to "gemini-2.0-flash")) ?: run {
+            console.error("Gemini AI model could not be loaded.")
+            return null
+        }
         val prompt = """
             You are an expert tech recruiter and career coach.
             Analyze the following professional profile against the provided job description.
@@ -62,7 +72,7 @@ object GeminiAi {
             val response = result.response
             val text = response.text() as String
 
-            // The model might wrap the JSON in markdown. We need to extract the raw JSON string.
+            // This logic to extract JSON from markdown is good.
             val startIndex = text.indexOf('{')
             val endIndex = text.lastIndexOf('}')
             if (startIndex == -1 || endIndex == -1) {
@@ -71,10 +81,7 @@ object GeminiAi {
             }
             val jsonString = text.substring(startIndex, endIndex + 1)
 
-            // Use kotlinx.serialization to parse the JSON string into our data class.
-            // Note: This requires the kotlinx.serialization library to be included in your project's dependencies.
-            Json.decodeFromString<AnalysisResult>(jsonString)
-        } catch (e: Exception) {
+            Json { ignoreUnknownKeys = true }.decodeFromString<AnalysisResult>(jsonString)        } catch (e: Exception) {
             console.error("Failed to analyze or parse AI response:", e.message)
             null
         }

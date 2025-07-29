@@ -9,7 +9,8 @@ import org.jetbrains.compose.web.renderComposable
 import kotlin.js.json
 
 fun main() {
-    Firebase.logEvent("page_view")
+    Firebase.init()
+    //Firebase.logEvent("page_view")
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
         LaunchedEffect(darkMode) {
@@ -192,10 +193,10 @@ fun ProfileMatchSection() {
     }
 
     fun performAnalysis() {
-        Firebase.logEvent(
-            eventName = "analyze_button_click",
-            params = json("description_length" to jobDescriptionText.length)
-        )
+//        Firebase.logEvent(
+//            eventName = "analyze_button_click",
+//            params = json("description_length" to jobDescriptionText.length)
+//        )
         isLoading = true
         analysisResult = null
         errorMessage = null
