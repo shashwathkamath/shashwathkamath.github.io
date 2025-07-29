@@ -3,7 +3,7 @@ object PortfolioData {
     val email = "kamathsh91@gmail.com"
     val resumeUrl = "Shashwath-Kamath-Senior-Engineer.pdf"
     val socialLinks = listOf(
-        "https://www.linkedin.com/in/shashwath-kamath/" to "fa-linkedin",
+        "https://www.linkedin.com/in/kamathshashwath" to "fa-linkedin",
         "https://github.com/shashwathkamath" to "fa-github"
     )
 
@@ -71,6 +71,20 @@ object PortfolioData {
         "SQL", "Android Studio", "VS Code", "Git", "Unit Testing", "Mentorship",
         "Agile Methodologies", "Performance Optimization", "Continuous Integration"
     )
+    val accomplishments = listOf(
+        Accomplishment(
+            title = "Image-surveilled security escort",
+            issuer = null,
+            id = "US20230274552A1",
+            url = "https://patents.google.com/patent/US20230274552A1/en?inventor=Shashwath+Kamath"
+        ),
+        Accomplishment(
+            title = "Best Innovations in Mobile Applications",
+            issuer = "SAP Singapore",
+            id = null,
+            url = null
+        )
+    )
 
     val navigationLinks = listOf(
         "Summary" to "#summary",
@@ -92,4 +106,11 @@ data class Project(
     val title: String,
     val description: String,
     val links: List<Pair<String, String>>
+)
+
+data class Accomplishment(
+    val title: String,
+    val issuer: String? = null,
+    val id: String? = null,
+    val url: String? = null
 )

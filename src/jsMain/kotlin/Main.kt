@@ -128,6 +128,7 @@ fun MainContent() {
     Div({ classes("col-md-9", "main-content") }) {
         SummarySection()
         ExperienceSection()
+        PatentsAndAwardsSection()
         ProfileMatchSection()
         ProjectsSection()
         SkillsSection()
@@ -312,6 +313,42 @@ fun ProjectsSection() {
                             }) { Text("View $name") }
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PatentsAndAwardsSection() {
+    Section({ id("patents"); classes("section") }) {
+        H2 { Text("Patents & Awards") }
+        PortfolioData.accomplishments.forEach { accomplishment ->
+            Div({ classes("accomplishment-card", "mb-4") }) {
+                H4 { Text(accomplishment.title) }
+                val details = mutableListOf<String>()
+                accomplishment.issuer?.takeIf { it.isNotBlank() }?.let {
+                    details.add(it)
+                }
+                accomplishment.id?.takeIf { it.isNotBlank() }?.let {
+                    details.add("ID: $it")
+                }
+                if (details.isNotEmpty()) {
+                    P({ classes("text-muted") }) {
+                        Text(details.joinToString(" | "))
+                    }
+                }
+                accomplishment.url?.let { url ->
+                    A(href = url, attrs = {
+                        classes("btn", "btn-sm", "btn-outline-primary")
+                        attr("target", "_blank")
+                        onClick {
+                            Firebase.logEvent(
+                                eventName = "accomplishment_link_click",
+                                params = json("accomplishment_title" to accomplishment.title)
+                            )
+                        }
+                    }) { Text("View Details") }
                 }
             }
         }
