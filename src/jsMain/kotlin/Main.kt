@@ -6,8 +6,10 @@ import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
+import kotlin.js.json
 
 fun main() {
+    Firebase.logEvent("page_view")
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
         LaunchedEffect(darkMode) {
@@ -43,14 +45,33 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
                     H1({ classes("display-4") }) { Text("Shashwath Kamath") }
                     P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
                     Div({ classes("mt-4") }) {
-                        A(href = "#contact", attrs = { classes("btn", "btn-dark", "btn-lg", "m-1") }) { Text("Get in Touch") }
+                        A(href = "#contact",
+                            attrs = { classes("btn", "btn-dark", "btn-lg", "m-1")
+                            onClick { Firebase.logEvent(
+                                "hero_button_click",
+                                json("button_name" to "get_in_touch")
+                            ) }
+                            })
+                        { Text("Get in Touch") }
                         A(href = PortfolioData.resumeUrl, attrs = {
                             classes("btn", "btn-dark", "btn-lg", "m-1")
                             attr("download", "")
+                            onClick {
+                                Firebase.logEvent(
+                                    "hero_button_click",
+                                    json("button_name" to "download_resume")
+                                )
+                            }
                         }) { Text("Download Resume") }
                         Button(attrs = {
                             classes("btn", "btn-dark", "btn-lg", "m-1")
-                            onClick { toggleDarkMode() }
+                            onClick {
+                                Firebase.logEvent(
+                                    "theme_toggle_click",
+                                    json("toggled_to" to if (darkMode) "light_mode" else "dark_mode")
+                                )
+                                toggleDarkMode()
+                            }
                         }) { Text(if (darkMode) "Light Mode" else "Dark Mode") }
                     }
                 }
@@ -170,6 +191,10 @@ fun ProfileMatchSection() {
     }
 
     fun performAnalysis() {
+        Firebase.logEvent(
+            eventName = "analyze_button_click",
+            params = json("description_length" to jobDescriptionText.length)
+        )
         isLoading = true
         analysisResult = null
         errorMessage = null
