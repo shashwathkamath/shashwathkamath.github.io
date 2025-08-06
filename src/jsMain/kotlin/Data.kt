@@ -62,6 +62,14 @@ object PortfolioData {
             title = "BookDigest (BookApp) - In Progress",
             description = "A mobile app for exchanging books (free or paid).",
             links = listOf("Frontend" to "https://github.com/shashwathkamath/BookApp", "Backend" to "https://github.com/shashwathkamath/BookApp-Backend")
+        ),
+        Project(
+            title = "Time Tracker SDK",
+            description = "Library to track code performance",
+            links = listOf(
+                "Jitpack" to "https://jitpack.io/#shashwathkamath/TimeTrackerSDK",
+                "Github" to "https://github.com/shashwathkamath/TimeTrackerSDK"
+            )
         )
     )
 
