@@ -303,14 +303,24 @@ fun ProjectsSection() {
         Div({ classes("row") }) {
             PortfolioData.projects.forEach { project ->
                 Div({ classes("col-md-6", "mb-4") }) {
-                    Div({ classes("project-card", "h-100") }) {
-                        // ... project title and description
-                        project.links.forEach { (name, url) ->
-                            A(href = url, attrs = {
-                                classes("btn", "btn-sm", "btn-outline-primary", "me-2")
-                                // FIX: Use attr() to set the target directly
-                                attr("target", "_blank")
-                            }) { Text("View $name") }
+                    Div({ classes("card", "h-100") }) { // Using Bootstrap card for better structure
+                        Div({ classes("card-body", "d-flex", "flex-column") }) {
+                            H5({ classes("card-title") }) { Text(project.title) }
+                            P({ classes("card-text", "flex-grow-1") }) { Text(project.description) }
+                            Div({ classes("mt-auto") }) {
+                                project.links.forEach { (name, url) ->
+                                    A(href = url, attrs = {
+                                        classes("btn", "btn-sm", "btn-outline-primary", "me-2")
+                                        attr("target", "_blank")
+                                        onClick {
+                                            Firebase.logEvent(
+                                                eventName = "project_link_click",
+                                                params = json("project_title" to project.title, "link_name" to name)
+                                            )
+                                        }
+                                    }) { Text(name) }
+                                }
+                            }
                         }
                     }
                 }
