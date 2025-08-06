@@ -76,7 +76,7 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
                     }
                 }
                 Div({ classes("col-md-4", "text-center", "d-none", "d-md-block") }) {
-                    Img(src = "/images/profile-picture.jpg", alt = "Shashwath Kamath", attrs = {
+                    Img(src = "https://avatars.githubusercontent.com/u/1234567?v=4", alt = "Shashwath Kamath", attrs = {
                         classes("img-fluid", "rounded-circle")
                         style {
                             width(200.px)
