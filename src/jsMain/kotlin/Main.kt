@@ -9,7 +9,10 @@ import org.jetbrains.compose.web.renderComposable
 import kotlin.js.json
 
 fun main() {
-    Firebase.logEvent("page_view")
+    val isProduction = kotlinx.browser.window.location.hostname == "shashwathkamath.github.io"
+    if (isProduction){
+        Firebase.logEvent("page_view")
+    }
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
         LaunchedEffect(darkMode) {
