@@ -6,13 +6,22 @@ import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
+import org.w3c.dom.get
 import kotlin.js.json
 
 fun main() {
     val isProduction = kotlinx.browser.window.location.hostname == "shashwathkamath.github.io"
     if (isProduction){
-        Firebase.logEvent("page_view")
+        val storage = kotlinx.browser.window.localStorage
+        val userIdKey = "portfolio_user_id"
+        val isNewUser = storage.get(userIdKey) == null
+        if (isNewUser){
+            val newUserId = "user_${kotlin.js.Date.now()}_${kotlin.random.Random.nextInt(1000)}"
+            storage.setItem(userIdKey,newUserId)
+            Firebase.logEvent("first_visit")
+        }
     }
+    Firebase.logEvent("page_view")
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
         LaunchedEffect(darkMode) {
