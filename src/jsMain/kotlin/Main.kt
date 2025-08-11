@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import myCertifications
 import org.jetbrains.compose.web.attributes.placeholder
 import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
 import org.w3c.dom.get
@@ -22,7 +23,8 @@ fun main() {
             storage.setItem(userIdKey,newUserId)
             Firebase.logEvent("first_visit")
         }
-    }
+    }    
+    setupSeoHead()
     Firebase.logEvent("page_view")
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
@@ -36,6 +38,57 @@ fun main() {
         }
         ResumeLayout(darkMode) { darkMode = !darkMode }
     }
+}
+
+/**
+ * Sets up the crucial SEO tags in the document's <head>.
+ */
+private fun setupSeoHead() {
+    val head = kotlinx.browser.document.head ?: return
+    val title = "Shashwath Kamath - Senior Android & Full Stack Engineer"
+    val description = "Portfolio of Shashwath Kamath, a seasoned Senior Android and Full Stack Engineer with expertise in Kotlin, Java, TypeScript, and building scalable mobile and web applications."
+    val url = "https://shashwathkamath.github.io"
+    val imageUrl = "https://avatars.githubusercontent.com/u/1234567?v=4"
+    kotlinx.browser.document.title = title
+
+    addMetaTag(head, "description", description)
+    addMetaTag(head, "keywords", "Shashwath Kamath, Android Developer, Full Stack Engineer, Kotlin, Java, React Native, TypeScript, Next.js, Portfolio")
+    addMetaTag(head, "author", "Shashwath Kamath")
+
+    addMetaTag(head, "og:title", title, "property")
+    addMetaTag(head, "og:description", description, "property")
+    addMetaTag(head, "og:type", "website", "property")
+    addMetaTag(head, "og:url", url, "property")
+    addJsonLd(head)
+}
+
+private fun addMetaTag(head: org.w3c.dom.HTMLHeadElement, name: String, content: String, attrName: String = "name") {
+    val element = kotlinx.browser.document.createElement("meta") as org.w3c.dom.HTMLMetaElement
+    element.setAttribute(attrName, name)
+    element.content = content
+    head.appendChild(element)
+}
+
+private fun addJsonLd(head: org.w3c.dom.HTMLHeadElement) {
+    val script = kotlinx.browser.document.createElement("script")
+    script.setAttribute("type", "application/ld+json")
+    // This structured data helps Google understand who you are, which can lead to rich search results.
+    script.textContent = """
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Shashwath Kamath",
+      "url": "https://shashwathkamath.github.io",
+      "image": "https://avatars.githubusercontent.com/u/1234567?v=4",
+      "sameAs": [
+        "https://www.linkedin.com/in/kamathshashwath",
+        "https://github.com/shashwathkamath"
+      ],
+      "jobTitle": "Senior Android & Full Stack Engineer",
+      "description": "${PortfolioData.summary.replace("\n", " ").replace("\"", "\\\"")}"
+    }
+    """.trimIndent()
+    head.appendChild(script)
 }
 
 @Composable
