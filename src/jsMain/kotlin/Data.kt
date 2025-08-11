@@ -100,6 +100,7 @@ object PortfolioData {
         "Skills" to "#skills",
         "Projects" to "#projects",
         "Patents & Awards" to "#patents",
+        "Certifications" to "#certifications",
         "Contact" to "#contact"
     )
 }
@@ -121,4 +122,44 @@ data class Accomplishment(
     val issuer: String? = null,
     val id: String? = null,
     val url: String? = null
+)
+
+data class Certification(
+    val name: String,
+    val issuingOrganization: String,
+    val date: String,
+    val credentialUrl: String,
+)
+
+val myCertifications = listOf(
+    Certification(
+        name = "Generative AI Fundamentals",
+        issuingOrganization = "Databricks Academy",
+        date = "Dec 2024",
+        credentialUrl = "https://credentials.databricks.com/f079b08d-9800-463d-a803-6f4045848946#acc.Sqm49RD6",
+    ),
+    Certification(
+        name = "Neo4j & LLM Fundamentals",
+        issuingOrganization = "GraphAcademy: Neo4j",
+        date = "Aug 2024",
+        credentialUrl = "https://graphacademy.neo4j.com/c/a7d2fc4a-1f49-4a38-b1a9-eaa034be10f5/",
+    ),
+    Certification(
+        name = "Building Neo4j Applications with TypeScript",
+        issuingOrganization = "GraphAcademy: Neo4j",
+        date = "Mar 2024",
+        credentialUrl = "https://graphacademy.neo4j.com/c/0f885a0c-e0fb-4346-9a26-979eb934032b/",
+    ),
+    Certification(
+        name = "Cypher Fundamentals",
+        issuingOrganization = "GraphAcademy: Neo4j",
+        date = "Mar 2024",
+        credentialUrl = "https://graphacademy.neo4j.com/c/11186c63-1073-43a7-a2d4-6781283a006b/",
+    ),
+    Certification(
+        name = "Graph Data Modeling Fundamentals",
+        issuingOrganization = "GraphAcademy: Neo4j",
+        date = "March 2024",
+        credentialUrl = "https://graphacademy.neo4j.com/c/51f94e4c-2868-4170-8879-e98c38872fc3/",
+    ),
 )

@@ -1,8 +1,10 @@
 package me.shashwathkamath
 
+import PortfolioData
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.web.attributes.*
+import myCertifications
+import org.jetbrains.compose.web.attributes.placeholder
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.renderComposable
@@ -141,6 +143,7 @@ fun MainContent() {
         SummarySection()
         ExperienceSection()
         PatentsAndAwardsSection()
+        CertificationsSection()
         ProfileMatchSection()
         ProjectsSection()
         SkillsSection()
@@ -397,6 +400,47 @@ fun ContactSection() {
         P {
             B { Text("Email: ") }
             A(href = "mailto:${PortfolioData.email}") { Text(PortfolioData.email) }
+        }
+    }
+}
+
+@Composable
+fun CertificationsSection() {
+    Section({ id("certifications"); classes("section") }) {
+        H2 { Text("Certifications & Credentials") }
+        Div({
+            style {
+                display(DisplayStyle.Flex)
+                flexDirection(FlexDirection.Row)
+                property("overflow-x", "auto")
+                property("flex-wrap", "nowrap")
+                gap(1.cssRem)
+                paddingBottom(1.cssRem)
+            }
+        }) {
+            myCertifications.forEach { cert ->
+                Div({
+                    classes("card")
+                    style {
+                        minWidth(320.px)
+                        flex("0 0 auto")
+                    }
+                }) {
+                    Div({ classes("card-body", "d-flex", "flex-column", "h-100") }) {
+                        H5({ classes("card-title") }) { Text(cert.name) }
+                        P({ classes("card-text", "text-muted", "flex-grow-1") }) {
+                            Text("${cert.issuingOrganization} | Issued: ${cert.date}")
+                        }
+                        Div({ classes("mt-auto") }) {
+                            A(href = cert.credentialUrl, attrs = {
+                                classes("btn", "btn-sm", "btn-outline-primary")
+                                attr("target", "_blank")
+                                onClick { Firebase.logEvent("certification_link_click", json("certification_name" to cert.name)) }
+                            }) { Text("View Credential") }
+                        }
+                    }
+                }
+            }
         }
     }
 }
