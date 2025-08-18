@@ -32,7 +32,7 @@ object PortfolioData {
             techStack = "React Native, TypeScript, React.js, Jetpack Compose, Next.js, Express, Apache Kafka"
         ),
         Job(
-            title = "Android Framework Engineer - L&T Technology Services (Oct 2017 - Aug 2021, Berkeley Heights, NJ)",
+            title = "Android Framework Engineer - Samsung Electronics America (Oct 2017 - Aug 2021, Berkeley Heights, NJ)",
             details = listOf(
                 "Enhanced user experience by developing intuitive SetupWizard screens for carrier-specific Samsung devices.",
                 "Analyzed carrier requirements to maintain and implement critical system app features ensuring compliance and operational efficiency.",
