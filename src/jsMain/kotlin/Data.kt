@@ -1,5 +1,5 @@
 object PortfolioData {
-    val summary = "Seasoned Senior Android and Full Stack Engineer with over 12 years of experience in designing and delivering efficient, scalable mobile and web applications. Proficient in Android Native development with Java and Kotlin, and adept in cross-platform solutions using React Native for 3 years. Skilled in full-stack technologies including TypeScript, Next.js, and Express.js, with a strong focus on performance optimization, user satisfaction, and mentoring teams to drive innovation and maintain industry standards."
+    val summary = "Seasoned Senior Android Engineer with 12+ years of experience building high-performance, scalable mobile applications for enterprises serving millions of users. Expert in Kotlin, Jetpack Compose, and Clean Architecture, with a strong full-stack foundation in TypeScript, Node.js, and React Native. Patent holder with a proven record of leading cross-functional teams, mentoring engineers, and driving measurable improvements in app performance, automation, and delivery quality."
     val email = "kamathsh91@gmail.com"
     val resumeUrl = "Shashwath-Kamath-Senior-Engineer.pdf"
     val socialLinks = listOf(
@@ -9,112 +9,119 @@ object PortfolioData {
 
     val jobs = listOf(
         Job(
-            title = "Senior Android and Full Stack Engineer - Infovision, Verizon (Oct 2023 - Present, Basking Ridge, NJ)",
+            role = "Senior Android Developer — Contract",
+            company = "Fidelity Investments",
+            period = "Dec 2025 – Present",
+            location = "Salt Lake City, UT",
             details = listOf(
-                "Architect My Verizon Services managing 25M+ devices, enhancing app efficiency and reliability.",
-                "Build Extension Profile Module for dynamic app module management, optimizing service downloads.",
-                "Create Carrier Config feature, enabling server-side carrier settings for improved user experience.",
-                "Developed a Unified Settings App for OEMs, ensuring compliance with Verizon standards and streamlining the device finalization process.",
-                "Orchestrated cross-functional teams to create an Automation Portal, achieving a 40% reduction in QA workload through optimized testing."
+                "Built and shipped features for the Fidelity Android app (10M+ downloads) focused on client cash and securities movement within the brokerage platform.",
+                "Delivered robust, production-grade UI using Kotlin, Jetpack Compose, and MVVM, meeting strict performance, security, and reliability standards for financial applications.",
+                "Collaborated with product, architecture, and UX teams to integrate complex backend APIs for real-time financial transactions.",
+                "Participated in Agile/DevOps workflows including sprint planning, code reviews, and CI/CD pipelines via Jenkins and Git.",
+                "Improved release stability through TDD practices and UI automation with UiAutomator."
             ),
-            techStack = "Kotlin, Clean Architecture, Java, MVI, Jetpack Compose, TypeScript, Next.js, Express"
+            techStack = "Kotlin, Jetpack Compose, MVVM, JUnit, UiAutomator, Jenkins, Git"
         ),
         Job(
-            title = "Senior Mobile and Backend Engineer - Johnson Controls Inc. (Aug 2021 - Aug 2023, Edison, NJ)",
+            role = "Senior Android & Full Stack Engineer — Contract",
+            company = "Verizon Wireless",
+            period = "Oct 2023 – Dec 2025",
+            location = "Basking Ridge, NJ",
             details = listOf(
-                "Led integration of OAuth for user authentication.",
-                "Developed advanced video streaming features using WebRTC, resulting in improved Time to First Frame and user engagement.",
-                "Architected a Rules Engine with Apache Kafka, optimizing performance for 1 million event messages.",
-                "Mentored junior engineers on best coding practices, fostering a culture of continuous learning and improving code quality.",
-                "Resolved complex issues in the Android Native Java and Typescript codebase, ensuring smooth deployment of the CloudVue app.",
-                "Optimized codebase performance, leading to faster load times and a noticeable increase in user satisfaction."
+                "Architected and maintained My Verizon Services, deployed across 25M+ devices, using Kotlin, Android SDK, and Clean Architecture.",
+                "Built the Extension Profile Module with dynamic module management and Clean Code principles, optimizing service delivery and modular downloads.",
+                "Engineered a Unified Settings App for OEMs using Jetpack Compose and Kotlin, streamlining device finalization to Verizon standards.",
+                "Led development of an Automation Portal (Express.js, Next.js, TypeScript) with CI/CD integration, reducing QA workload by 40%.",
+                "Optimized app startup time and runtime efficiency using Android Profiler and Macrobenchmark.",
+                "Mentored engineers across the team, promoting Clean Architecture adoption, code review culture, and best practices."
             ),
-            techStack = "React Native, TypeScript, React.js, Jetpack Compose, Next.js, Express, Apache Kafka"
+            techStack = "Kotlin, Java, Android SDK, Jetpack Compose, MVI, TypeScript, Next.js, Express.js"
         ),
         Job(
-            title = "Android Framework Engineer - Samsung Electronics America (Oct 2017 - Aug 2021, Berkeley Heights, NJ)",
+            role = "Senior Mobile & Backend Engineer",
+            company = "Johnson Controls Inc.",
+            period = "Aug 2021 – Aug 2023",
+            location = "Edison, NJ",
             details = listOf(
-                "Enhanced user experience by developing intuitive SetupWizard screens for carrier-specific Samsung devices.",
-                "Analyzed carrier requirements to maintain and implement critical system app features ensuring compliance and operational efficiency.",
-                "Created automation scripts using Python for app testing, significantly reducing manual testing time and improving deployment speed.",
-                "Partnered with cross-functional teams to gather feedback, driving continuous improvements in carrier applications.",
-                "Demonstrated strong problem-solving skills by addressing technical challenges in app development.",
-                "Enhanced app performance by aligning system app features with carrier needs, resulting in improved user satisfaction."
+                "Developed advanced video streaming features using WebRTC for the CloudVue app, significantly reducing Time to First Frame and boosting engagement.",
+                "Designed and implemented a Rules Engine powered by Apache Kafka, handling 1M+ messages and enabling real-time event-driven decision making.",
+                "Integrated OAuth 2.0 across mobile and web platforms using React Native, TypeScript, and Express.js, enhancing security and sign-in experience.",
+                "Optimized performance across React Native and Android Native codebases via profiling tools and Jetpack Compose refactoring.",
+                "Built secure, scalable backend APIs with TypeScript, Next.js, Express.js, and PostgreSQL.",
+                "Championed automated testing (JUnit, Mockito) and CI/CD best practices, reducing regression rates.",
+                "Mentored junior engineers through code reviews, pairing sessions, and technical guidance."
             ),
-            techStack = "Kotlin, MVVM, Java, XML, Python"
+            techStack = "React Native, Jetpack Compose, Android Native (Java/Kotlin), TypeScript, Next.js, Express.js, PostgreSQL"
         ),
         Job(
-            title = "Senior Mobile Developer - Shobiz Experiential Communications Pvt Ltd. (Mar 2013 - Dec 2014, Mumbai, India)",
+            role = "Android Framework Engineer — Contract",
+            company = "Samsung Electronics America",
+            period = "Oct 2017 – Aug 2021",
+            location = "Berkeley Heights, NJ",
             details = listOf(
-                "Led mobile app development, enhancing user engagement and data collection efficiency.",
-                "Resolved app issues, ensuring seamless updates and improved functionality.",
-                "Utilized Android and iOS tech stack, advancing project delivery timelines.",
-                "Spearheaded mobile application development, contributing to a 30% increase in client project success.",
-                "Designed interactive wireframes that improved client presentation outcomes.",
-                "Fostered teamwork across departments to build kiosk applications, streamlining user data collection."
+                "Developed SetupWizard screens for Samsung carrier-specific devices using Kotlin, Java, MVVM, and Jetpack Compose, improving device onboarding experience.",
+                "Implemented critical system app features aligned with carrier compliance requirements using deep Android framework expertise.",
+                "Automated mobile testing with Espresso, JUnit, Mockito, and Python scripting, significantly reducing manual QA effort.",
+                "Led debugging and troubleshooting initiatives across Java and Kotlin codebases, ensuring rapid resolution of production issues.",
+                "Collaborated with QA, product, and UX teams to ship iterative improvements based on user feedback."
             ),
-            techStack = "Android, iOS, MVP pattern, Java, XML"
-        )
-    )
-
-    val projects = listOf(
-        Project(
-            title = "BookDigest (BookApp) - In Progress",
-            description = "A mobile app for exchanging books (free or paid).",
-            links = listOf("Frontend" to "https://github.com/shashwathkamath/BookApp", "Backend" to "https://github.com/shashwathkamath/BookApp-Backend")
+            techStack = "Kotlin, Java, MVVM, Jetpack Compose, Espresso, JUnit, Mockito"
         ),
-        Project(
-            title = "Time Tracker SDK",
-            description = "Library to track code performance",
-            links = listOf(
-                "Jitpack" to "https://jitpack.io/#shashwathkamath/TimeTrackerSDK",
-                "Github" to "https://github.com/shashwathkamath/TimeTrackerSDK"
-            )
+        Job(
+            role = "Senior Mobile Developer",
+            company = "Shobiz Experiential Communications",
+            period = "Mar 2013 – Dec 2014",
+            location = "Mumbai, India",
+            details = listOf(
+                "Led mobile app development (Android & iOS) for client campaigns, contributing to a 30% increase in project success rates.",
+                "Built kiosk applications in collaboration with cross-functional teams, streamlining user data collection and service responsiveness.",
+                "Designed interactive wireframes that improved client presentation outcomes and increased project approvals."
+            ),
+            techStack = "Java, XML, MVP Pattern"
         )
     )
 
     val skills = listOf(
-        "Android Development", "React Native", "React JS", "Flutter", "Redux Thunk", "Java",
-        "TypeScript", "Dart", "JavaScript", "Kotlin", "Node JS", "Express JS", "PostgreSQL",
-        "SQL", "Android Studio", "VS Code", "Git", "Unit Testing", "Mentorship",
-        "Agile Methodologies", "Performance Optimization", "Continuous Integration"
+        // Mobile
+        "Kotlin", "Java", "Jetpack Compose", "Android SDK", "React Native", "Flutter",
+        "MVVM", "MVI", "Clean Architecture",
+        // Frontend
+        "React.js", "Next.js", "TypeScript", "JavaScript", "Redux-Thunk", "Dart",
+        // Backend & Data
+        "Node.js", "Express.js", "PostgreSQL", "SQL", "Firebase Firestore",
+        "Apache Kafka", "REST APIs", "OAuth 2.0",
+        // Tools & Practices
+        "Git", "Jenkins", "CI/CD", "JUnit", "Mockito", "Espresso",
+        "UiAutomator", "TDD", "Performance Profiling", "Agile/Scrum"
     )
+
     val accomplishments = listOf(
         Accomplishment(
-            title = "Image-surveilled security escort",
-            issuer = null,
+            title = "U.S. Patent — Image Surveilled Security Escort",
+            issuer = "Johnson Controls (Mar 2023)",
             id = "US20230274552A1",
             url = "https://patents.google.com/patent/US20230274552A1/en?inventor=Shashwath+Kamath"
-        ),
-        Accomplishment(
-            title = "Best Innovations in Mobile Applications",
-            issuer = "SAP Singapore",
-            id = null,
-            url = null
         )
     )
 
     val navigationLinks = listOf(
         "Summary" to "#summary",
         "Experience" to "#experience",
+        "Education" to "#education",
         "Skills" to "#skills",
-        "Projects" to "#projects",
-        "Patents & Awards" to "#patents",
+        "Patent" to "#patents",
         "Certifications" to "#certifications",
         "Contact" to "#contact"
     )
 }
 
 data class Job(
-    val title: String,
+    val role: String,
+    val company: String,
+    val period: String,
+    val location: String,
     val details: List<String>,
     val techStack: String
-)
-
-data class Project(
-    val title: String,
-    val description: String,
-    val links: List<Pair<String, String>>
 )
 
 data class Accomplishment(
@@ -124,11 +131,30 @@ data class Accomplishment(
     val url: String? = null
 )
 
+data class Degree(
+    val degree: String,
+    val institution: String,
+    val year: String
+)
+
 data class Certification(
     val name: String,
     val issuingOrganization: String,
     val date: String,
     val credentialUrl: String,
+)
+
+val myEducation = listOf(
+    Degree(
+        degree = "M.S., Computer Science",
+        institution = "Illinois Institute of Technology, Chicago",
+        year = "May 2017"
+    ),
+    Degree(
+        degree = "B.E., Electronics & Telecommunication",
+        institution = "Nagpur University",
+        year = "Jun 2012"
+    )
 )
 
 val myCertifications = listOf(

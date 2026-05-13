@@ -2,9 +2,8 @@ package me.shashwathkamath
 
 import PortfolioData
 import androidx.compose.runtime.*
-import kotlinx.coroutines.launch
 import myCertifications
-import org.jetbrains.compose.web.attributes.placeholder
+import myEducation
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.dom.*
@@ -12,53 +11,49 @@ import org.jetbrains.compose.web.renderComposable
 import org.w3c.dom.get
 import kotlin.js.json
 
+private const val SITE_URL = "https://shashwathkamath.com"
+
 fun main() {
-    val isProduction = kotlinx.browser.window.location.hostname == "shashwathkamath.github.io"
-    if (isProduction){
+    val hostname = kotlinx.browser.window.location.hostname
+    val isProduction = hostname == "shashwathkamath.com"
+            || hostname == "www.shashwathkamath.com"
+            || hostname == "shashwathkamath.github.io"
+    if (isProduction) {
         val storage = kotlinx.browser.window.localStorage
         val userIdKey = "portfolio_user_id"
         val isNewUser = storage.get(userIdKey) == null
-        if (isNewUser){
+        if (isNewUser) {
             val newUserId = "user_${kotlin.js.Date.now()}_${kotlin.random.Random.nextInt(1000)}"
-            storage.setItem(userIdKey,newUserId)
+            storage.setItem(userIdKey, newUserId)
             Firebase.logEvent("first_visit")
         }
-    }    
+    }
     setupSeoHead()
     Firebase.logEvent("page_view")
     renderComposable(rootElementId = "root") {
         var darkMode by remember { mutableStateOf(false) }
         LaunchedEffect(darkMode) {
             val body = kotlinx.browser.document.body
-            if (darkMode) {
-                body?.classList?.add("dark")
-            } else {
-                body?.classList?.remove("dark")
-            }
+            if (darkMode) body?.classList?.add("dark")
+            else body?.classList?.remove("dark")
         }
         ResumeLayout(darkMode) { darkMode = !darkMode }
     }
 }
 
-/**
- * Sets up the crucial SEO tags in the document's <head>.
- */
 private fun setupSeoHead() {
     val head = kotlinx.browser.document.head ?: return
-    val title = "Shashwath Kamath - Senior Android & Full Stack Engineer"
+    val title = "Shashwath Kamath – Senior Android & Full Stack Engineer"
     val description = "Portfolio of Shashwath Kamath, a seasoned Senior Android and Full Stack Engineer with expertise in Kotlin, Java, TypeScript, and building scalable mobile and web applications."
-    val url = "https://shashwathkamath.github.io"
-    val imageUrl = "https://avatars.githubusercontent.com/u/1234567?v=4"
     kotlinx.browser.document.title = title
 
     addMetaTag(head, "description", description)
     addMetaTag(head, "keywords", "Shashwath Kamath, Android Developer, Full Stack Engineer, Kotlin, Java, React Native, TypeScript, Next.js, Portfolio")
     addMetaTag(head, "author", "Shashwath Kamath")
-
     addMetaTag(head, "og:title", title, "property")
     addMetaTag(head, "og:description", description, "property")
     addMetaTag(head, "og:type", "website", "property")
-    addMetaTag(head, "og:url", url, "property")
+    addMetaTag(head, "og:url", SITE_URL, "property")
     addJsonLd(head)
 }
 
@@ -72,14 +67,12 @@ private fun addMetaTag(head: org.w3c.dom.HTMLHeadElement, name: String, content:
 private fun addJsonLd(head: org.w3c.dom.HTMLHeadElement) {
     val script = kotlinx.browser.document.createElement("script")
     script.setAttribute("type", "application/ld+json")
-    // This structured data helps Google understand who you are, which can lead to rich search results.
     script.textContent = """
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Shashwath Kamath",
-      "url": "https://shashwathkamath.github.io",
-      "image": "https://avatars.githubusercontent.com/u/1234567?v=4",
+      "url": "$SITE_URL",
       "sameAs": [
         "https://www.linkedin.com/in/kamathshashwath",
         "https://github.com/shashwathkamath"
@@ -109,29 +102,30 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
         Div({ classes("container") }) {
             Div({ classes("row", "align-items-center") }) {
                 Div({ classes("col-md-8") }) {
-                    H1({ classes("display-4") }) { Text("Shashwath Kamath") }
-                    P({ classes("lead") }) { Text("Senior Android & Full Stack Engineer | Innovator | Mentor") }
+                    H1 { Text("Shashwath Kamath") }
+                    P({ classes("lead") }) { Text("Senior Android Developer · Patent Holder · Mentor") }
                     Div({ classes("mt-4") }) {
-                        A(href = "#contact",
-                            attrs = { classes("btn", "btn-dark", "btn-lg", "m-1")
-                            onClick { Firebase.logEvent(
-                                "hero_button_click",
-                                json("button_name" to "get_in_touch")
-                            ) }
-                            })
-                        { Text("Get in Touch") }
-                        A(href = PortfolioData.resumeUrl, attrs = {
-                            classes("btn", "btn-dark", "btn-lg", "m-1")
-                            attr("download", "")
-                            onClick {
-                                Firebase.logEvent(
-                                    "hero_button_click",
-                                    json("button_name" to "download_resume")
-                                )
+                        A(
+                            href = "#contact",
+                            attrs = {
+                                classes("btn", "btn-light", "btn-lg", "m-1")
+                                onClick {
+                                    Firebase.logEvent("hero_button_click", json("button_name" to "get_in_touch"))
+                                }
                             }
-                        }) { Text("Download Resume") }
+                        ) { Text("Get in Touch") }
+                        A(
+                            href = PortfolioData.resumeUrl,
+                            attrs = {
+                                classes("btn", "btn-outline-light", "btn-lg", "m-1")
+                                attr("download", "")
+                                onClick {
+                                    Firebase.logEvent("hero_button_click", json("button_name" to "download_resume"))
+                                }
+                            }
+                        ) { Text("Download Resume") }
                         Button(attrs = {
-                            classes("btn", "btn-dark", "btn-lg", "m-1")
+                            classes("btn", "btn-outline-light", "btn-lg", "m-1")
                             onClick {
                                 Firebase.logEvent(
                                     "theme_toggle_click",
@@ -139,17 +133,15 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
                                 )
                                 toggleDarkMode()
                             }
-                        }) { Text(if (darkMode) "Light Mode" else "Dark Mode") }
+                        }) { Text(if (darkMode) "☀️ Light" else "🌙 Dark") }
                     }
                 }
                 Div({ classes("col-md-4", "text-center", "d-none", "d-md-block") }) {
-                    Img(src = "https://avatars.githubusercontent.com/u/1234567?v=4", alt = "Shashwath Kamath", attrs = {
-                        classes("img-fluid", "rounded-circle")
-                        style {
-                            width(200.px)
-                            height(200.px)
-                        }
-                    })
+                    Img(
+                        src = "images/profile-picture.jpg",
+                        alt = "Shashwath Kamath",
+                        attrs = { classes("hero-avatar") }
+                    )
                 }
             }
         }
@@ -159,15 +151,7 @@ fun HeroSection(darkMode: Boolean, toggleDarkMode: () -> Unit) {
 @Composable
 fun Sidebar() {
     Div({ classes("col-md-3", "sidebar") }) {
-        Div({ classes("card", "p-3", "mb-4", "text-center", "bg-primary", "text-white") }) {
-            H4({ classes("card-title") }) { Text("AI Profile Matcher") }
-            P({ classes("card-text", "small") }) { Text("See how my skills align with your job opening in seconds.") }
-            A(href = "#profile-matcher", attrs = { classes("btn", "btn-light") }) {
-                Text("Analyze Now")
-            }
-        }
-
-        H3 { Text("Navigation") }
+        P({ classes("sidebar-nav-label") }) { Text("Navigate") }
         Ul({ classes("nav", "flex-column") }) {
             PortfolioData.navigationLinks.forEach { (name, sectionId) ->
                 Li({ classes("nav-item") }) {
@@ -175,15 +159,16 @@ fun Sidebar() {
                 }
             }
         }
-        H3({ classes("mt-4") }) { Text("Connect") }
-        Div({ classes("d-flex", "justify-content-center", "justify-content-md-start") }) {
+
+        P({ classes("sidebar-nav-label") }) { Text("Connect") }
+        Div({ classes("d-flex", "gap-3") }) {
             PortfolioData.socialLinks.forEach { (url, iconClass) ->
                 A(href = url, attrs = {
-                    classes("social-icon", "me-3")
-                    // FIX: Use attr() to set the target directly
+                    classes("social-icon")
                     attr("target", "_blank")
+                    attr("rel", "noopener noreferrer")
                 }) {
-                    I({ classes("fab", iconClass, "fa-2x") })
+                    I({ classes("fab", iconClass) })
                 }
             }
         }
@@ -195,10 +180,9 @@ fun MainContent() {
     Div({ classes("col-md-9", "main-content") }) {
         SummarySection()
         ExperienceSection()
+        EducationSection()
         PatentsAndAwardsSection()
         CertificationsSection()
-        ProfileMatchSection()
-        ProjectsSection()
         SkillsSection()
         ContactSection()
     }
@@ -216,182 +200,34 @@ fun SummarySection() {
 fun ExperienceSection() {
     Section({ id("experience"); classes("section") }) {
         H2 { Text("Work Experience") }
-        PortfolioData.jobs.forEach { job ->
-            Div({ classes("experience-card", "mb-4") }) {
-                H4 { Text(job.title) }
-                // Note: Company and Period are now part of the title string in your data model.
-                // If you wanted to separate them, you'd add them as fields to the Job data class.
-                Ul {
-                    job.details.forEach { detail ->
-                        Li { Text(detail) }
+        Div({ classes("timeline") }) {
+            PortfolioData.jobs.forEach { job ->
+                Div({ classes("timeline-item") }) {
+                    Div({ classes("job-role") }) { Text(job.role) }
+                    Div({ classes("job-meta") }) {
+                        Span({ classes("job-company") }) { Text(job.company) }
+                        Text("  ·  ${job.period}  ·  ${job.location}")
                     }
-                }
-                P {
-                    B { Text("Tech Stack: ") }
-                    Text(job.techStack)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ProfileMatchSection() {
-    var jobDescriptionText by remember { mutableStateOf("") }
-    var analysisResult by remember { mutableStateOf<AnalysisResult?>(null) }
-    var isLoading by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    val coroutineScope = rememberCoroutineScope()
-
-    val profileText = remember {
-        val skills = PortfolioData.skills.joinToString(", ")
-        val experience = PortfolioData.jobs.joinToString("\n\n") { job ->
-            "${job.title}\n${job.details.joinToString("\n- ")}\nTech Stack: ${job.techStack}"
-        }
-        """
-        Professional Summary:
-        ${PortfolioData.summary}
-
-        Skills: $skills
-
-        Experience:
-        $experience
-        """.trimIndent()
-    }
-
-    fun performAnalysis() {
-        Firebase.logEvent(
-            eventName = "analyze_button_click",
-            params = json("description_length" to jobDescriptionText.length)
-        )
-        isLoading = true
-        analysisResult = null
-        errorMessage = null
-        coroutineScope.launch {
-            try {
-                val result = GeminiAi.analyze(
-                    profile = profileText,
-                    jobDescription = jobDescriptionText
-                )
-                if (result != null) {
-                    analysisResult = result
-                } else {
-                    errorMessage = "Sorry, the analysis could not be completed. The AI returned an invalid response."
-                }
-            } catch (e: Exception) {
-                console.error("An unexpected error occurred during analysis:", e)
-                errorMessage = "An unexpected error occurred. Please check the browser console (F12) for more details."
-            } finally {
-                isLoading = false
-            }
-        }
-    }
-
-    Section({ id("profile-matcher"); classes("section") }) {
-        H2 { Text("AI-Powered Profile Matcher") }
-        P { Text("Paste a job description below to get an AI-generated analysis of how well it matches my profile.") }
-        Div({ classes("mb-3") }) {
-            TextArea(jobDescriptionText) {
-                classes("form-control")
-                style { property("height", "150px") }
-                placeholder("Paste job description here...")
-                onInput { event ->
-                    jobDescriptionText = event.value
-                    analysisResult = null
-                    errorMessage = null
-                }
-            }
-        }
-        Button(attrs = {
-            classes("btn", "btn-primary")
-            onClick {
-                if (jobDescriptionText.isNotBlank()) {
-                    performAnalysis()
-                }
-            }
-            if (jobDescriptionText.isBlank() || isLoading) {
-                attr("disabled", "true")
-            }
-        }) {
-            Text(if (isLoading) "Analyzing..." else "Analyze with AI")
-        }
-
-        if (isLoading) {
-            Div({ classes("mt-3", "d-flex", "align-items-center") }) {
-                Div({ classes("spinner-border", "text-primary", "me-3") }) {
-                    Span({ classes("visually-hidden") }) { Text("Loading...") }
-                }
-                Span { Text("Analyzing... This may take a moment.") }
-            }
-        }
-
-        errorMessage?.let { error ->
-            Div({ classes("alert", "alert-danger", "mt-4") }) {
-                Text(error)
-            }
-        }
-
-        analysisResult?.let { result ->
-            Div({ classes("mt-4", "p-3", "border", "rounded") }) {
-                H4 { Text("AI Analysis Result") }
-                P { B { Text("Overall Match Score: ${result.matchScore}%") } }
-                Div({ classes("progress") }) {
-                    Div({
-                        classes("progress-bar")
-                        style { width(result.matchScore.percent) }
-                        attr("role", "progressbar")
-                        attr("aria-valuenow", result.matchScore.toString())
-                        attr("aria-valuemin", "0")
-                        attr("aria-valuemax", "100")
-                    })
-                }
-                H5({ classes("mt-4") }) { Text("Summary") }
-                P { Text(result.summary) }
-                H5({ classes("mt-3") }) { Text("Strengths") }
-                Ul({ classes("list-group") }) {
-                    result.strengths.forEach { strength ->
-                        Li({ classes("list-group-item") }) { Text(strength) }
-                    }
-                }
-                H5({ classes("mt-3") }) { Text("Gaps / Areas for Growth") }
-                Ul({ classes("list-group") }) {
-                    result.gaps.forEach { gap ->
-                        Li({ classes("list-group-item") }) { Text(gap) }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ProjectsSection() {
-    Section({ id("projects"); classes("section") }) {
-        H2 { Text("Personal Projects") }
-        Div({ classes("row") }) {
-            PortfolioData.projects.forEach { project ->
-                Div({ classes("col-md-6", "mb-4") }) {
-                    Div({ classes("card", "h-100") }) { // Using Bootstrap card for better structure
-                        Div({ classes("card-body", "d-flex", "flex-column") }) {
-                            H5({ classes("card-title") }) { Text(project.title) }
-                            P({ classes("card-text", "flex-grow-1") }) { Text(project.description) }
-                            Div({ classes("mt-auto") }) {
-                                project.links.forEach { (name, url) ->
-                                    A(href = url, attrs = {
-                                        classes("btn", "btn-sm", "btn-outline-primary", "me-2")
-                                        attr("target", "_blank")
-                                        onClick {
-                                            Firebase.logEvent(
-                                                eventName = "project_link_click",
-                                                params = json("project_title" to project.title, "link_name" to name)
-                                            )
-                                        }
-                                    }) { Text(name) }
-                                }
-                            }
+                    Ul {
+                        job.details.forEach { detail ->
+                            Li { Text(detail) }
                         }
                     }
+                    Span({ classes("tech-badge") }) { Text(job.techStack) }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun EducationSection() {
+    Section({ id("education"); classes("section") }) {
+        H2 { Text("Education") }
+        myEducation.forEach { degree ->
+            Div({ classes("accomplishment-card") }) {
+                H4 { Text(degree.degree) }
+                P({ classes("text-muted", "mb-0") }) { Text("${degree.institution}  ·  ${degree.year}") }
             }
         }
     }
@@ -402,31 +238,24 @@ fun PatentsAndAwardsSection() {
     Section({ id("patents"); classes("section") }) {
         H2 { Text("Patents & Awards") }
         PortfolioData.accomplishments.forEach { accomplishment ->
-            Div({ classes("accomplishment-card", "mb-4") }) {
+            Div({ classes("accomplishment-card") }) {
                 H4 { Text(accomplishment.title) }
-                val details = mutableListOf<String>()
-                accomplishment.issuer?.takeIf { it.isNotBlank() }?.let {
-                    details.add(it)
-                }
-                accomplishment.id?.takeIf { it.isNotBlank() }?.let {
-                    details.add("ID: $it")
+                val details = buildList {
+                    accomplishment.issuer?.takeIf { it.isNotBlank() }?.let { add(it) }
+                    accomplishment.id?.takeIf { it.isNotBlank() }?.let { add("ID: $it") }
                 }
                 if (details.isNotEmpty()) {
-                    P({ classes("text-muted") }) {
-                        Text(details.joinToString(" | "))
-                    }
+                    P({ classes("text-muted", "mb-2") }) { Text(details.joinToString("  ·  ")) }
                 }
                 accomplishment.url?.let { url ->
                     A(href = url, attrs = {
                         classes("btn", "btn-sm", "btn-outline-primary")
                         attr("target", "_blank")
+                        attr("rel", "noopener noreferrer")
                         onClick {
-                            Firebase.logEvent(
-                                eventName = "accomplishment_link_click",
-                                params = json("accomplishment_title" to accomplishment.title)
-                            )
+                            Firebase.logEvent("accomplishment_link_click", json("title" to accomplishment.title))
                         }
-                    }) { Text("View Details") }
+                    }) { Text("View Details →") }
                 }
             }
         }
@@ -439,7 +268,7 @@ fun SkillsSection() {
         H2 { Text("Skills & Technologies") }
         Div({ classes("skills-grid") }) {
             PortfolioData.skills.forEach { skill ->
-                Span({ classes("skill-card") }) { Text(skill) }
+                Span({ classes("skill-pill") }) { Text(skill) }
             }
         }
     }
@@ -449,10 +278,11 @@ fun SkillsSection() {
 fun ContactSection() {
     Section({ id("contact"); classes("section") }) {
         H2 { Text("Get in Touch") }
-        P { Text("I'm always open to discussing new projects, creative ideas. Feel free to reach out.") }
+        P { Text("I'm always open to discussing new projects and creative ideas. Feel free to reach out.") }
         P {
-            B { Text("Email: ") }
-            A(href = "mailto:${PortfolioData.email}") { Text(PortfolioData.email) }
+            A(href = "mailto:${PortfolioData.email}", attrs = { classes("contact-email") }) {
+                Text(PortfolioData.email)
+            }
         }
     }
 }
@@ -461,37 +291,21 @@ fun ContactSection() {
 fun CertificationsSection() {
     Section({ id("certifications"); classes("section") }) {
         H2 { Text("Certifications & Credentials") }
-        Div({
-            style {
-                display(DisplayStyle.Flex)
-                flexDirection(FlexDirection.Row)
-                property("overflow-x", "auto")
-                property("flex-wrap", "nowrap")
-                gap(1.cssRem)
-                paddingBottom(1.cssRem)
-            }
-        }) {
+        Div({ classes("cert-grid") }) {
             myCertifications.forEach { cert ->
-                Div({
-                    classes("card")
-                    style {
-                        minWidth(320.px)
-                        flex("0 0 auto")
+                Div({ classes("cert-card") }) {
+                    H5 { Text(cert.name) }
+                    P({ classes("cert-meta") }) {
+                        Text("${cert.issuingOrganization}  ·  ${cert.date}")
                     }
-                }) {
-                    Div({ classes("card-body", "d-flex", "flex-column", "h-100") }) {
-                        H5({ classes("card-title") }) { Text(cert.name) }
-                        P({ classes("card-text", "text-muted", "flex-grow-1") }) {
-                            Text("${cert.issuingOrganization} | Issued: ${cert.date}")
+                    A(href = cert.credentialUrl, attrs = {
+                        classes("btn", "btn-sm", "btn-outline-primary")
+                        attr("target", "_blank")
+                        attr("rel", "noopener noreferrer")
+                        onClick {
+                            Firebase.logEvent("certification_link_click", json("name" to cert.name))
                         }
-                        Div({ classes("mt-auto") }) {
-                            A(href = cert.credentialUrl, attrs = {
-                                classes("btn", "btn-sm", "btn-outline-primary")
-                                attr("target", "_blank")
-                                onClick { Firebase.logEvent("certification_link_click", json("certification_name" to cert.name)) }
-                            }) { Text("View Credential") }
-                        }
-                    }
+                    }) { Text("View Credential") }
                 }
             }
         }
@@ -501,6 +315,6 @@ fun CertificationsSection() {
 @Composable
 fun FooterSection() {
     Footer {
-        Text("© ${js("new Date().getFullYear()")} Shashwath Kamath. Built with Kotlin/JS and Compose for Web.")
+        Text("© ${js("new Date().getFullYear()")} Shashwath Kamath · Built with Kotlin/JS & Compose for Web")
     }
 }

@@ -39,25 +39,24 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-        env:
-          # This securely uses the secret you configured in your repository settings
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Prepare artifact for deployment
         run: |
-          # Create a directory to hold all files for the website
-          mkdir -p _site
-          
-          # Copy the essential files into the deployment directory
-          # 1. The main HTML file
+          mkdir -p _site/images
+
           cp src/jsMain/resources/index.html _site/
-          
-          # 2. The compiled JavaScript application
           cp build/dist/js/productionExecutable/shashwathkamath.github.io.js _site/
-          
-          # 3. Any other assets, like your resume PDF
+
           if [ -f src/jsMain/resources/Shashwath-Kamath-Senior-Engineer.pdf ]; then
             cp src/jsMain/resources/Shashwath-Kamath-Senior-Engineer.pdf _site/
+          fi
+
+          if [ -f src/jsMain/resources/CNAME ]; then
+            cp src/jsMain/resources/CNAME _site/
+          fi
+
+          if [ -f src/jsMain/resources/images/profile-picture.jpg ]; then
+            cp src/jsMain/resources/images/profile-picture.jpg _site/images/
           fi
 
       - name: Setup Pages
